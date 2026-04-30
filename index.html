@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calorie Deficit Calculator – Find Your TDEE & Fat Loss Targets | CalorieDeficit.io</title>
+<meta name="description" content="Free calorie deficit calculator. Enter your stats and instantly get your TDEE, daily calorie target, macros and body fat estimate. Science-based, no signup required.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #0e0f11;
+  --surface: #16181c;
+  --surface2: #1e2126;
+  --border: #2a2d35;
+  --accent: #c8f53a;
+  --accent2: #4ade80;
+  --accent3: #fb923c;
+  --text: #f0f0ee;
+  --text2: #9a9b9f;
+  --text3: #5a5c62;
+  --danger: #f87171;
+  --radius: 14px;
+  --radius-sm: 8px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* noise texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wrap { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; padding: 0 20px 60px; }
+
+/* HEADER */
+header {
+  padding: 48px 0 36px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 40px;
+}
+.logo {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  font-family: 'DM Mono', monospace;
+}
+h1 {
+  font-size: clamp(28px, 5vw, 42px);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+h1 span { color: var(--accent); }
+.subtitle {
+  color: var(--text2);
+  font-size: 16px;
+  font-weight: 300;
+  max-width: 500px;
+}
+
+/* TABS */
+.tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 4px;
+  margin-bottom: 28px;
+}
+.tab {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text2);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+.tab.active {
+  background: var(--accent);
+  color: #0e0f11;
+}
+.tab:hover:not(.active) { color: var(--text); background: var(--surface2); }
+
+/* PANELS */
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* CARD */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  margin-bottom: 20px;
+}
+.card-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 20px;
+  font-family: 'DM Mono', monospace;
+}
+
+/* FORM */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media(max-width:520px){ .grid2 { grid-template-columns: 1fr; } }
+
+.field { display: flex; flex-direction: column; gap: 7px; }
+label { font-size: 13px; color: var(--text2); font-weight: 400; }
+
+.input-wrap { position: relative; }
+input[type=number], select {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  padding: 11px 14px;
+  outline: none;
+  transition: border-color 0.2s;
+  appearance: none;
+  -webkit-appearance: none;
+}
+input[type=number]:focus, select:focus { border-color: var(--accent); }
+.unit {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: var(--text3);
+  font-family: 'DM Mono', monospace;
+  pointer-events: none;
+}
+
+/* UNIT TOGGLE */
+.unit-toggle {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+.utbtn {
+  padding: 7px 18px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: transparent;
+  color: var(--text2);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.utbtn.active { border-color: var(--accent); color: var(--accent); background: rgba(200,245,58,0.07); }
+
+/* RADIO BUTTONS */
+.radio-group { display: flex; flex-wrap: wrap; gap: 8px; }
+.radio-btn {
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: transparent;
+  color: var(--text2);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.radio-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(200,245,58,0.07); }
+
+/* GOAL SELECTOR */
+.goal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+.goal-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+.goal-card.active { border-color: var(--accent); background: rgba(200,245,58,0.06); }
+.goal-card .icon { font-size: 22px; margin-bottom: 6px; }
+.goal-card .name { font-size: 13px; font-weight: 500; color: var(--text); }
+.goal-card .desc { font-size: 11px; color: var(--text3); margin-top: 2px; }
+
+/* CTA BUTTON */
+.cta {
+  width: 100%;
+  padding: 15px;
+  background: var(--accent);
+  color: #0e0f11;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+  margin-top: 8px;
+  letter-spacing: -0.01em;
+}
+.cta:hover { opacity: 0.92; }
+.cta:active { transform: scale(0.99); }
+
+/* RESULTS */
+#results { display: none; }
+.result-hero {
+  background: linear-gradient(135deg, #1a1f14 0%, #131810 100%);
+  border: 1px solid rgba(200,245,58,0.25);
+  border-radius: var(--radius);
+  padding: 32px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.result-hero::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 160px;
+  height: 160px;
+  background: radial-gradient(circle, rgba(200,245,58,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.result-label { font-size: 12px; color: var(--accent); font-family: 'DM Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+.result-big { font-size: clamp(48px, 10vw, 72px); font-weight: 600; color: var(--accent); letter-spacing: -0.03em; line-height: 1; }
+.result-sub { font-size: 15px; color: var(--text2); margin-top: 8px; }
+
+.metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 20px; }
+.metric {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 18px 16px;
+}
+.metric-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; font-family: 'DM Mono', monospace; margin-bottom: 6px; }
+.metric-value { font-size: 26px; font-weight: 600; letter-spacing: -0.02em; }
+.metric-unit { font-size: 13px; color: var(--text2); font-weight: 400; }
+
+/* MACROS BAR */
+.macros-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.macro-row { margin-bottom: 14px; }
+.macro-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+.macro-name { font-size: 14px; font-weight: 500; }
+.macro-grams { font-size: 13px; color: var(--text2); font-family: 'DM Mono', monospace; }
+.bar-bg { height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 3px; transition: width 0.6s cubic-bezier(.4,0,.2,1); }
+
+/* TIMELINE */
+.timeline-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 20px;
+}
+.timeline-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.timeline-row:last-child { border-bottom: none; }
+.timeline-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.timeline-week { font-size: 12px; color: var(--text3); font-family: 'DM Mono', monospace; width: 60px; flex-shrink: 0; }
+.timeline-bar-wrap { flex: 1; height: 8px; background: var(--surface2); border-radius: 4px; overflow: hidden; }
+.timeline-bar { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--accent2), var(--accent)); }
+.timeline-weight { font-size: 13px; font-weight: 500; color: var(--text); width: 70px; text-align: right; flex-shrink: 0; }
+
+/* AFFILIATE BLOCK */
+.affiliate {
+  background: linear-gradient(135deg, #1a1510 0%, #120f0a 100%);
+  border: 1px solid rgba(251,146,60,0.3);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.affiliate-icon { font-size: 32px; flex-shrink: 0; }
+.affiliate-title { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+.affiliate-desc { font-size: 13px; color: var(--text2); margin-bottom: 12px; }
+.affiliate-link {
+  display: inline-block;
+  padding: 9px 20px;
+  background: var(--accent3);
+  color: #0e0f11;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.affiliate-link:hover { opacity: 0.88; }
+
+/* GLP1 ALERT */
+.glp1-block {
+  background: rgba(74,222,128,0.06);
+  border: 1px solid rgba(74,222,128,0.25);
+  border-radius: var(--radius-sm);
+  padding: 16px 18px;
+  margin-bottom: 20px;
+  display: none;
+}
+.glp1-block.show { display: block; }
+.glp1-title { font-size: 13px; font-weight: 600; color: var(--accent2); margin-bottom: 4px; }
+.glp1-text { font-size: 13px; color: var(--text2); line-height: 1.6; }
+
+/* FAQ */
+.faq { margin-top: 48px; border-top: 1px solid var(--border); padding-top: 40px; }
+.faq-title { font-size: 22px; font-weight: 600; margin-bottom: 24px; letter-spacing: -0.02em; }
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-q {
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  text-align: left;
+  padding: 18px 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.faq-q .chevron { font-size: 18px; color: var(--text3); transition: transform 0.2s; flex-shrink: 0; }
+.faq-q.open .chevron { transform: rotate(45deg); }
+.faq-a { font-size: 14px; color: var(--text2); line-height: 1.7; padding-bottom: 18px; display: none; }
+.faq-a.show { display: block; }
+
+/* RESET */
+.reset-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text2);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  padding: 10px 20px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 4px;
+  transition: all 0.2s;
+}
+.reset-btn:hover { color: var(--text); border-color: var(--text3); }
+
+/* BODY FAT PANEL specific */
+.bf-chart {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin: 16px 0;
+}
+.bf-cat {
+  border-radius: var(--radius-sm);
+  padding: 10px 6px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 500;
+  border: 2px solid transparent;
+  transition: all 0.3s;
+}
+.bf-cat .pct { font-size: 15px; font-weight: 600; display: block; margin-bottom: 2px; font-family: 'DM Mono', monospace; }
+.bf-cat .name { color: rgba(255,255,255,0.7); }
+.bf-cat.highlight { transform: scale(1.05); }
+
+/* FOOTER */
+footer {
+  margin-top: 60px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--text3);
+  line-height: 1.7;
+}
+footer a { color: var(--text3); text-decoration: underline; }
+
+/* PROGRESS TRACKER PANEL */
+.tracker-note {
+  background: var(--surface2);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  font-size: 13px;
+  color: var(--text2);
+  margin-bottom: 16px;
+}
+.log-entry {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+.log-entry:last-child { border-bottom: none; }
+.log-date { color: var(--text3); font-family: 'DM Mono', monospace; font-size: 12px; width: 90px; flex-shrink: 0; }
+.log-w { font-weight: 500; }
+.log-diff { font-size: 12px; padding: 2px 8px; border-radius: 10px; font-family: 'DM Mono', monospace; }
+.log-diff.down { background: rgba(74,222,128,0.12); color: var(--accent2); }
+.log-diff.up { background: rgba(248,113,113,0.12); color: var(--danger); }
+.log-diff.same { background: var(--surface2); color: var(--text3); }
+.delete-log { margin-left: auto; background: none; border: none; color: var(--text3); cursor: pointer; font-size: 16px; padding: 0 4px; }
+.delete-log:hover { color: var(--danger); }
+
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <div class="logo">CalorieDeficit.io</div>
+    <h1>Your <span>Calorie Deficit</span> &amp; TDEE Calculator</h1>
+    <p class="subtitle">Get your maintenance calories, daily deficit target, macros and fat loss timeline — instantly. No signup.</p>
+  </header>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('calc')">🔥 Deficit Calculator</button>
+    <button class="tab" onclick="switchTab('bodyfat')">📊 Body Fat Estimator</button>
+    <button class="tab" onclick="switchTab('tracker')">📈 Progress Tracker</button>
+  </div>
+
+  <!-- ===== CALCULATOR PANEL ===== -->
+  <div id="panel-calc" class="panel active">
+
+    <div class="card">
+      <div class="card-title">Your Stats</div>
+
+      <div class="unit-toggle">
+        <button class="utbtn active" onclick="setUnits('metric', this)">Metric (kg / cm)</button>
+        <button class="utbtn" onclick="setUnits('imperial', this)">Imperial (lb / in)</button>
+      </div>
+
+      <div class="grid2" style="margin-bottom:16px">
+        <div class="field">
+          <label>Age</label>
+          <div class="input-wrap">
+            <input type="number" id="age" placeholder="30" min="15" max="90">
+            <span class="unit">yrs</span>
+          </div>
+        </div>
+        <div class="field">
+          <label>Sex</label>
+          <select id="sex">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+        <div class="field">
+          <label id="lbl-weight">Weight</label>
+          <div class="input-wrap">
+            <input type="number" id="weight" placeholder="75" step="0.1">
+            <span class="unit" id="unit-weight">kg</span>
+          </div>
+        </div>
+        <div class="field">
+          <label id="lbl-height">Height</label>
+          <div class="input-wrap">
+            <input type="number" id="height" placeholder="175" step="1">
+            <span class="unit" id="unit-height">cm</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="field" style="margin-bottom:20px">
+        <label>Activity Level</label>
+        <div class="radio-group" id="activity-group">
+          <button class="radio-btn" onclick="setActivity('1.2',this)">Sedentary</button>
+          <button class="radio-btn active" onclick="setActivity('1.375',this)">Light Exercise</button>
+          <button class="radio-btn" onclick="setActivity('1.55',this)">Moderate</button>
+          <button class="radio-btn" onclick="setActivity('1.725',this)">Very Active</button>
+          <button class="radio-btn" onclick="setActivity('1.9',this)">Athlete</button>
+        </div>
+        <div style="font-size:12px;color:var(--text3);margin-top:6px" id="activity-desc">1–3 days/week light cardio or walking</div>
+      </div>
+
+      <div class="field" style="margin-bottom:0">
+        <label>Your Goal</label>
+        <div class="goal-grid">
+          <div class="goal-card" onclick="setGoal('aggressive',this)">
+            <div class="icon">🔥</div>
+            <div class="name">Aggressive</div>
+            <div class="desc">-1 kg/week</div>
+          </div>
+          <div class="goal-card active" onclick="setGoal('moderate',this)">
+            <div class="icon">⚡</div>
+            <div class="name">Moderate</div>
+            <div class="desc">-0.5 kg/week</div>
+          </div>
+          <div class="goal-card" onclick="setGoal('slow',this)">
+            <div class="icon">🌱</div>
+            <div class="name">Gentle</div>
+            <div class="desc">-0.25 kg/week</div>
+          </div>
+          <div class="goal-card" onclick="setGoal('maintain',this)">
+            <div class="icon">⚖️</div>
+            <div class="name">Maintain</div>
+            <div class="desc">Stay at weight</div>
+          </div>
+          <div class="goal-card" onclick="setGoal('bulk',this)">
+            <div class="icon">💪</div>
+            <div class="name">Lean Bulk</div>
+            <div class="desc">+0.25 kg/week</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GLP-1 toggle -->
+      <div style="margin-top:18px;display:flex;align-items:center;gap:10px">
+        <input type="checkbox" id="glp1-check" style="width:16px;height:16px;accent-color:var(--accent)">
+        <label for="glp1-check" style="font-size:13px;color:var(--text2);cursor:pointer">I'm on a GLP-1 medication (Ozempic, Wegovy, Mounjaro…)</label>
+      </div>
+    </div>
+
+    <div class="field" style="margin-bottom:20px">
+      <label>Target Weight <span style="color:var(--text3);font-size:12px">(optional — for timeline)</span></label>
+      <div class="input-wrap">
+        <input type="number" id="target-weight" placeholder="65" step="0.1">
+        <span class="unit" id="unit-target">kg</span>
+      </div>
+    </div>
+
+    <button class="cta" onclick="calculate()">Calculate My Targets →</button>
+
+    <!-- ===== RESULTS ===== -->
+    <div id="results">
+
+      <div style="height:28px"></div>
+
+      <!-- GLP-1 alert -->
+      <div class="glp1-block" id="glp1-alert">
+        <div class="glp1-title">⚕️ GLP-1 Mode Active</div>
+        <div class="glp1-text">On semaglutide/tirzepatide, your hunger signals are suppressed — making it easy to under-eat protein. We've increased your protein target to protect muscle mass. Aim for the high end. Always follow your prescriber's guidance.</div>
+      </div>
+
+      <!-- Main result -->
+      <div class="result-hero">
+        <div class="result-label">Daily Calorie Target</div>
+        <div class="result-big" id="res-calories">—</div>
+        <div class="result-sub" id="res-calories-sub">calories per day</div>
+      </div>
+
+      <!-- Key metrics -->
+      <div class="metrics-grid">
+        <div class="metric">
+          <div class="metric-label">TDEE</div>
+          <div class="metric-value" id="res-tdee">—</div>
+          <div class="metric-unit">kcal/day</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Daily Deficit</div>
+          <div class="metric-value" id="res-deficit" style="color:var(--accent)">—</div>
+          <div class="metric-unit">kcal/day</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Weekly Loss</div>
+          <div class="metric-value" id="res-weekly">—</div>
+          <div class="metric-unit" id="res-weekly-unit">kg/week</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">BMR</div>
+          <div class="metric-value" id="res-bmr">—</div>
+          <div class="metric-unit">kcal/day</div>
+        </div>
+      </div>
+
+      <!-- Macros -->
+      <div class="macros-card">
+        <div class="card-title">Recommended Macros</div>
+        <div class="macro-row">
+          <div class="macro-header">
+            <span class="macro-name" style="color:#f472b6">Protein</span>
+            <span class="macro-grams" id="macro-protein-g">— g &nbsp;·&nbsp; — kcal</span>
+          </div>
+          <div class="bar-bg"><div class="bar-fill" id="bar-protein" style="background:#f472b6;width:0%"></div></div>
+        </div>
+        <div class="macro-row">
+          <div class="macro-header">
+            <span class="macro-name" style="color:#60a5fa">Carbs</span>
+            <span class="macro-grams" id="macro-carbs-g">— g &nbsp;·&nbsp; — kcal</span>
+          </div>
+          <div class="bar-bg"><div class="bar-fill" id="bar-carbs" style="background:#60a5fa;width:0%"></div></div>
+        </div>
+        <div class="macro-row" style="margin-bottom:0">
+          <div class="macro-header">
+            <span class="macro-name" style="color:#fbbf24">Fat</span>
+            <span class="macro-grams" id="macro-fat-g">— g &nbsp;·&nbsp; — kcal</span>
+          </div>
+          <div class="bar-bg"><div class="bar-fill" id="bar-fat" style="background:#fbbf24;width:0%"></div></div>
+        </div>
+      </div>
+
+      <!-- Timeline -->
+      <div class="timeline-card" id="timeline-block" style="display:none">
+        <div class="card-title">Fat Loss Timeline</div>
+        <div id="timeline-rows"></div>
+      </div>
+
+      <!-- Affiliate -->
+      <div class="affiliate">
+        <div class="affiliate-icon">🍎</div>
+        <div>
+          <div class="affiliate-title">Track your macros effortlessly</div>
+          <div class="affiliate-desc">Hit your daily targets with a calorie tracking app. Used by 200M+ people.</div>
+          <a href="#" class="affiliate-link" id="aff-link">Try MyFitnessPal Free →</a>
+        </div>
+      </div>
+
+      <button class="reset-btn" onclick="resetCalc()">← Recalculate</button>
+
+    </div>
+    <!-- /results -->
+
+  </div>
+  <!-- /calc panel -->
+
+  <!-- ===== BODY FAT PANEL ===== -->
+  <div id="panel-bodyfat" class="panel">
+    <div class="card">
+      <div class="card-title">Body Fat Estimator (Navy Method)</div>
+      <p style="font-size:13px;color:var(--text2);margin-bottom:20px">Enter your measurements for a scientifically-validated body fat estimate. Use a soft tape measure.</p>
+
+      <div class="unit-toggle">
+        <button class="utbtn active" onclick="setBFUnits('metric',this)">Metric (cm)</button>
+        <button class="utbtn" onclick="setBFUnits('imperial',this)">Imperial (in)</button>
+      </div>
+
+      <div class="grid2" style="margin-bottom:16px">
+        <div class="field">
+          <label>Sex</label>
+          <select id="bf-sex" onchange="toggleBFFields()">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+        <div class="field">
+          <label id="bf-lbl-height">Height (cm)</label>
+          <div class="input-wrap">
+            <input type="number" id="bf-height" placeholder="175">
+            <span class="unit" id="bf-unit-height">cm</span>
+          </div>
+        </div>
+        <div class="field">
+          <label>Neck circumference</label>
+          <div class="input-wrap">
+            <input type="number" id="bf-neck" placeholder="38">
+            <span class="unit" id="bf-unit-neck">cm</span>
+          </div>
+        </div>
+        <div class="field">
+          <label>Waist circumference</label>
+          <div class="input-wrap">
+            <input type="number" id="bf-waist" placeholder="85">
+            <span class="unit" id="bf-unit-waist">cm</span>
+          </div>
+        </div>
+        <div class="field" id="bf-hip-field" style="display:none">
+          <label>Hip circumference (females)</label>
+          <div class="input-wrap">
+            <input type="number" id="bf-hip" placeholder="95">
+            <span class="unit" id="bf-unit-hip">cm</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="cta" onclick="calcBodyFat()">Estimate Body Fat %</button>
+
+      <div id="bf-result" style="display:none;margin-top:24px">
+        <div class="result-hero" style="margin-bottom:16px">
+          <div class="result-label">Estimated Body Fat</div>
+          <div class="result-big" id="bf-pct-big">—</div>
+          <div class="result-sub" id="bf-category">—</div>
+        </div>
+        <div class="bf-chart" id="bf-chart"></div>
+        <div style="font-size:12px;color:var(--text3);margin-top:8px">Based on the US Navy circumference method (Hodgdon & Beckett, 1984). Results are estimates ±2–3%.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== TRACKER PANEL ===== -->
+  <div id="panel-tracker" class="panel">
+    <div class="card">
+      <div class="card-title">Weight Log</div>
+      <div class="tracker-note">📱 Your data is saved locally in your browser. Nothing is sent to any server.</div>
+
+      <div class="grid2" style="margin-bottom:16px;align-items:end">
+        <div class="field">
+          <label>Today's weight</label>
+          <div class="input-wrap">
+            <input type="number" id="log-weight" placeholder="75.5" step="0.1">
+            <span class="unit" id="log-unit">kg</span>
+          </div>
+        </div>
+        <button class="cta" onclick="logWeight()" style="margin-top:0">Log Weight</button>
+      </div>
+
+      <div id="log-list" style="margin-top:8px"></div>
+      <div id="log-empty" style="font-size:14px;color:var(--text3);padding:20px 0;text-align:center">No entries yet. Log your first weight above.</div>
+
+      <!-- Stats -->
+      <div id="tracker-stats" style="display:none;margin-top:16px">
+        <div class="metrics-grid">
+          <div class="metric">
+            <div class="metric-label">Starting</div>
+            <div class="metric-value" id="stat-start">—</div>
+            <div class="metric-unit" id="stat-unit1">kg</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Current</div>
+            <div class="metric-value" id="stat-current">—</div>
+            <div class="metric-unit" id="stat-unit2">kg</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Total Change</div>
+            <div class="metric-value" id="stat-change" style="color:var(--accent2)">—</div>
+            <div class="metric-unit" id="stat-unit3">kg</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FAQ ===== -->
+  <div class="faq">
+    <h2 class="faq-title">Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">What is TDEE and why does it matter? <span class="chevron">+</span></button>
+      <div class="faq-a">TDEE stands for Total Daily Energy Expenditure — the total number of calories your body burns in a day, including exercise. To lose fat you need to eat below your TDEE (a deficit), and to gain muscle you eat above it. Knowing your TDEE is the single most important number for body composition change.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">How big should my calorie deficit be? <span class="chevron">+</span></button>
+      <div class="faq-a">A moderate deficit of 300–500 kcal/day (roughly 0.5 kg/week loss) is considered the optimal zone: fast enough to see results, slow enough to preserve muscle and energy. Aggressive deficits (500–750 kcal/day) work but carry a higher risk of muscle loss, fatigue and rebound. Never go below your BMR without medical supervision.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Why is protein so important during a deficit? <span class="chevron">+</span></button>
+      <div class="faq-a">When you eat in a calorie deficit, your body can break down muscle tissue for energy — a process called catabolism. High protein intake (1.6–2.2 g per kg of bodyweight) stimulates muscle protein synthesis and dramatically reduces muscle loss during fat loss. This is even more critical on GLP-1 medications where appetite suppression makes hitting protein targets harder.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">How accurate is this calorie deficit calculator? <span class="chevron">+</span></button>
+      <div class="faq-a">We use the Mifflin-St Jeor equation, considered the most accurate BMR formula for the general population (±10% error vs. measured metabolic rate). Real-world results depend on your actual activity, metabolic adaptations and food tracking accuracy. Use these numbers as a starting point and adjust after 2–3 weeks based on actual weight trend.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">What is the Navy Method for body fat estimation? <span class="chevron">+</span></button>
+      <div class="faq-a">The US Navy circumference method (Hodgdon & Beckett, 1984) estimates body fat percentage from height, neck, waist and hip (females only) measurements. It's validated to ±2–3% accuracy for most people — comparable to bioelectrical impedance scales but far cheaper. A DEXA scan remains the gold standard for precise body composition analysis.</div>
+    </div>
+  </div>
+
+  <footer>
+    <p>This calculator is for informational purposes only and does not constitute medical or nutritional advice. Consult a healthcare professional before making significant dietary changes. If you are on prescription medication including GLP-1 agonists, follow your prescriber's specific guidance on caloric intake.</p>
+    <p style="margin-top:8px">Formulas: BMR via Mifflin-St Jeor equation. Body fat via US Navy circumference method (Hodgdon &amp; Beckett, 1984). Activity multipliers per the Harris-Benedict framework.</p>
+  </footer>
+
+</div><!-- /wrap -->
+
+<script>
+// ===== STATE =====
+let unitSystem = 'metric';
+let activityMultiplier = 1.375;
+let goalSetting = 'moderate';
+let bfUnitSystem = 'metric';
+const goalDeficits = { aggressive: 750, moderate: 375, slow: 190, maintain: 0, bulk: -190 };
+const activityDescs = {
+  '1.2': 'Desk job, little or no exercise',
+  '1.375': '1–3 days/week light cardio or walking',
+  '1.55': '3–5 days/week moderate exercise',
+  '1.725': '6–7 days/week hard training',
+  '1.9': 'Physical job + daily training'
+};
+
+// ===== TABS =====
+function switchTab(tab) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + tab).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// ===== UNITS =====
+function setUnits(sys, btn) {
+  unitSystem = sys;
+  document.querySelectorAll('.utbtn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const m = sys === 'metric';
+  document.getElementById('unit-weight').textContent = m ? 'kg' : 'lb';
+  document.getElementById('unit-height').textContent = m ? 'cm' : 'in';
+  document.getElementById('unit-target').textContent = m ? 'kg' : 'lb';
+  document.getElementById('lbl-weight').textContent = m ? 'Weight' : 'Weight';
+  document.getElementById('lbl-height').textContent = m ? 'Height' : 'Height';
+  document.getElementById('weight').placeholder = m ? '75' : '165';
+  document.getElementById('height').placeholder = m ? '175' : '69';
+}
+
+function setActivity(val, btn) {
+  activityMultiplier = parseFloat(val);
+  document.querySelectorAll('#activity-group .radio-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('activity-desc').textContent = activityDescs[val];
+}
+
+function setGoal(goal, card) {
+  goalSetting = goal;
+  document.querySelectorAll('.goal-card').forEach(c => c.classList.remove('active'));
+  card.classList.add('active');
+}
+
+// ===== MAIN CALC =====
+function calculate() {
+  const ageVal = parseFloat(document.getElementById('age').value);
+  const sex = document.getElementById('sex').value;
+  let weight = parseFloat(document.getElementById('weight').value);
+  let height = parseFloat(document.getElementById('height').value);
+  const glp1 = document.getElementById('glp1-check').checked;
+  let targetWeight = parseFloat(document.getElementById('target-weight').value);
+
+  if (!ageVal || !weight || !height) { alert('Please fill in Age, Weight and Height.'); return; }
+
+  // Convert to metric
+  if (unitSystem === 'imperial') {
+    weight = weight * 0.453592;
+    height = height * 2.54;
+    if (!isNaN(targetWeight)) targetWeight = targetWeight * 0.453592;
+  }
+
+  // BMR — Mifflin-St Jeor
+  let bmr;
+  if (sex === 'male') bmr = 10 * weight + 6.25 * height - 5 * ageVal + 5;
+  else bmr = 10 * weight + 6.25 * height - 5 * ageVal - 161;
+
+  const tdee = Math.round(bmr * activityMultiplier);
+  const deficit = goalDeficits[goalSetting];
+  const targetCals = tdee - deficit;
+  const weeklyLoss = (deficit * 7) / 7700; // kg per week (7700 kcal ≈ 1 kg fat)
+
+  // Macros
+  let proteinMultiplier = glp1 ? 2.2 : 1.8; // higher for GLP-1
+  const protein = Math.round(weight * proteinMultiplier);
+  const proteinCals = protein * 4;
+  const fatCals = Math.round(targetCals * 0.27);
+  const fat = Math.round(fatCals / 9);
+  const carbCals = targetCals - proteinCals - fatCals;
+  const carbs = Math.round(carbCals / 4);
+  const total = proteinCals + fatCals + Math.max(carbCals, 0);
+
+  // Update UI
+  document.getElementById('results').style.display = 'block';
+  document.getElementById('res-calories').textContent = Math.round(targetCals).toLocaleString();
+  document.getElementById('res-tdee').textContent = tdee.toLocaleString();
+  document.getElementById('res-bmr').textContent = Math.round(bmr).toLocaleString();
+
+  if (deficit > 0) {
+    document.getElementById('res-deficit').textContent = '-' + deficit;
+    document.getElementById('res-calories-sub').textContent = 'calories per day · ' + tdee.toLocaleString() + ' kcal TDEE';
+  } else if (deficit < 0) {
+    document.getElementById('res-deficit').textContent = '+' + Math.abs(deficit);
+    document.getElementById('res-calories-sub').textContent = 'calories per day (lean bulk)';
+  } else {
+    document.getElementById('res-deficit').textContent = '0';
+    document.getElementById('res-calories-sub').textContent = 'calories per day (maintenance)';
+  }
+
+  const wlu = unitSystem === 'imperial' ? 'lb/week' : 'kg/week';
+  const wlv = unitSystem === 'imperial' ? (weeklyLoss * 2.205).toFixed(2) : weeklyLoss.toFixed(2);
+  document.getElementById('res-weekly').textContent = deficit > 0 ? '-' + wlv : deficit < 0 ? '+' + Math.abs(wlv) : '0';
+  document.getElementById('res-weekly-unit').textContent = wlu;
+
+  document.getElementById('macro-protein-g').textContent = protein + ' g  ·  ' + proteinCals + ' kcal';
+  document.getElementById('macro-carbs-g').textContent = Math.max(carbs, 0) + ' g  ·  ' + Math.max(carbCals, 0) + ' kcal';
+  document.getElementById('macro-fat-g').textContent = fat + ' g  ·  ' + fatCals + ' kcal';
+  document.getElementById('bar-protein').style.width = (proteinCals / total * 100) + '%';
+  document.getElementById('bar-carbs').style.width = (Math.max(carbCals, 0) / total * 100) + '%';
+  document.getElementById('bar-fat').style.width = (fatCals / total * 100) + '%';
+
+  // GLP-1
+  document.getElementById('glp1-alert').classList.toggle('show', glp1);
+
+  // Timeline
+  if (!isNaN(targetWeight) && deficit > 0) {
+    const weightToLose = weight - targetWeight;
+    if (weightToLose > 0) {
+      const weeksToGoal = Math.ceil(weightToLose / (deficit * 7 / 7700));
+      const rows = document.getElementById('timeline-rows');
+      rows.innerHTML = '';
+      const steps = Math.min(weeksToGoal, 12);
+      const step = Math.ceil(weeksToGoal / steps);
+      for (let w = 0; w <= weeksToGoal; w += step) {
+        const lostKg = (deficit * 7 / 7700) * w;
+        const currW = weight - lostKg;
+        const displayW = unitSystem === 'imperial' ? (currW * 2.205).toFixed(1) + ' lb' : currW.toFixed(1) + ' kg';
+        const pct = Math.min((lostKg / weightToLose) * 100, 100);
+        const isGoal = w >= weeksToGoal;
+        rows.innerHTML += `<div class="timeline-row">
+          <div class="timeline-dot" style="background:${isGoal?'var(--accent)':'var(--border)'}"></div>
+          <div class="timeline-week">Wk ${w}</div>
+          <div class="timeline-bar-wrap"><div class="timeline-bar" style="width:${pct}%"></div></div>
+          <div class="timeline-weight">${displayW}</div>
+        </div>`;
+        if (isGoal) break;
+      }
+      document.getElementById('timeline-block').style.display = 'block';
+    }
+  } else {
+    document.getElementById('timeline-block').style.display = 'none';
+  }
+
+  // Affiliate link variation
+  const affLink = document.getElementById('aff-link');
+  if (glp1) {
+    affLink.textContent = 'Track macros & protein on GLP-1 →';
+  } else if (goalSetting === 'bulk') {
+    affLink.textContent = 'Track your lean bulk macros free →';
+  } else {
+    affLink.textContent = 'Try MyFitnessPal Free →';
+  }
+
+  document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function resetCalc() {
+  document.getElementById('results').style.display = 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ===== BODY FAT =====
+function setBFUnits(sys, btn) {
+  bfUnitSystem = sys;
+  document.querySelectorAll('#panel-bodyfat .utbtn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const m = sys === 'metric';
+  const u = m ? 'cm' : 'in';
+  ['bf-unit-height','bf-unit-neck','bf-unit-waist','bf-unit-hip'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = u;
+  });
+  document.getElementById('bf-lbl-height').textContent = m ? 'Height (cm)' : 'Height (in)';
+  document.getElementById('bf-height').placeholder = m ? '175' : '69';
+  document.getElementById('bf-neck').placeholder = m ? '38' : '15';
+  document.getElementById('bf-waist').placeholder = m ? '85' : '33';
+  document.getElementById('bf-hip').placeholder = m ? '95' : '37';
+}
+
+function toggleBFFields() {
+  const female = document.getElementById('bf-sex').value === 'female';
+  document.getElementById('bf-hip-field').style.display = female ? 'block' : 'none';
+}
+
+function calcBodyFat() {
+  let h = parseFloat(document.getElementById('bf-height').value);
+  let neck = parseFloat(document.getElementById('bf-neck').value);
+  let waist = parseFloat(document.getElementById('bf-waist').value);
+  let hip = parseFloat(document.getElementById('bf-hip').value);
+  const sex = document.getElementById('bf-sex').value;
+
+  if (!h || !neck || !waist || (sex === 'female' && !hip)) {
+    alert('Please fill all measurement fields.'); return;
+  }
+
+  // Convert to cm if imperial
+  if (bfUnitSystem === 'imperial') {
+    h *= 2.54; neck *= 2.54; waist *= 2.54;
+    if (sex === 'female') hip *= 2.54;
+  }
+
+  let bf;
+  if (sex === 'male') {
+    bf = 495 / (1.0324 - 0.19077 * Math.log10(waist - neck) + 0.15456 * Math.log10(h)) - 450;
+  } else {
+    bf = 495 / (1.29579 - 0.35004 * Math.log10(waist + hip - neck) + 0.22100 * Math.log10(h)) - 450;
+  }
+  bf = Math.round(bf * 10) / 10;
+
+  // Categories
+  const cats = sex === 'male'
+    ? [{name:'Essential', min:2, max:5, color:'#f472b6'},{name:'Athlete', min:6, max:13, color:'#4ade80'},{name:'Fitness', min:14, max:17, color:'#c8f53a'},{name:'Average', min:18, max:24, color:'#fb923c'},{name:'Obese', min:25, max:100, color:'#f87171'}]
+    : [{name:'Essential', min:10, max:13, color:'#f472b6'},{name:'Athlete', min:14, max:20, color:'#4ade80'},{name:'Fitness', min:21, max:24, color:'#c8f53a'},{name:'Average', min:25, max:31, color:'#fb923c'},{name:'Obese', min:32, max:100, color:'#f87171'}];
+
+  let category = cats[cats.length-1];
+  for (const c of cats) { if (bf >= c.min && bf <= c.max) { category = c; break; } }
+
+  document.getElementById('bf-pct-big').textContent = bf + '%';
+  document.getElementById('bf-category').textContent = category.name + ' — ' + (sex === 'male' ? 'Men: ' : 'Women: ') + category.min + '–' + (category.max === 100 ? '30+' : category.max) + '%';
+  document.getElementById('bf-pct-big').style.color = category.color;
+
+  const chart = document.getElementById('bf-chart');
+  chart.innerHTML = cats.map(c => {
+    const active = c.name === category.name;
+    const mid = c.max === 100 ? c.min + '+' : c.min + '–' + c.max + '%';
+    return `<div class="bf-cat ${active ? 'highlight' : ''}" style="background:${active ? c.color + '22' : 'var(--surface2)'};border-color:${active ? c.color : 'transparent'}">
+      <span class="pct" style="color:${c.color}">${mid}</span>
+      <span class="name">${c.name}</span>
+    </div>`;
+  }).join('');
+
+  document.getElementById('bf-result').style.display = 'block';
+}
+
+// ===== TRACKER =====
+function getLog() {
+  try { return JSON.parse(localStorage.getItem('cd_weight_log') || '[]'); } catch { return []; }
+}
+function saveLog(log) { localStorage.setItem('cd_weight_log', JSON.stringify(log)); }
+
+function logWeight() {
+  const w = parseFloat(document.getElementById('log-weight').value);
+  if (!w || w < 20 || w > 500) { alert('Please enter a valid weight.'); return; }
+  const log = getLog();
+  const today = new Date().toISOString().slice(0, 10);
+  const existing = log.findIndex(e => e.date === today);
+  if (existing >= 0) log[existing].weight = w;
+  else log.push({ date: today, weight: w });
+  log.sort((a, b) => a.date.localeCompare(b.date));
+  saveLog(log);
+  document.getElementById('log-weight').value = '';
+  renderLog();
+}
+
+function deleteLogEntry(date) {
+  const log = getLog().filter(e => e.date !== date);
+  saveLog(log);
+  renderLog();
+}
+
+function renderLog() {
+  const log = getLog();
+  const list = document.getElementById('log-list');
+  const empty = document.getElementById('log-empty');
+  const stats = document.getElementById('tracker-stats');
+
+  if (log.length === 0) {
+    list.innerHTML = '';
+    empty.style.display = 'block';
+    stats.style.display = 'none';
+    return;
+  }
+
+  empty.style.display = 'none';
+  stats.style.display = 'block';
+
+  const display = [...log].reverse().slice(0, 20);
+  list.innerHTML = display.map((e, i) => {
+    const prev = display[i + 1];
+    let diffHtml = '';
+    if (prev) {
+      const diff = e.weight - prev.weight;
+      const sign = diff < 0 ? 'down' : diff > 0 ? 'up' : 'same';
+      const arrow = diff < 0 ? '▼' : diff > 0 ? '▲' : '—';
+      diffHtml = `<span class="log-diff ${sign}">${arrow} ${Math.abs(diff).toFixed(1)}</span>`;
+    }
+    return `<div class="log-entry">
+      <span class="log-date">${e.date}</span>
+      <span class="log-w">${e.weight} <span style="color:var(--text3);font-size:12px">kg</span></span>
+      ${diffHtml}
+      <button class="delete-log" onclick="deleteLogEntry('${e.date}')" title="Delete">×</button>
+    </div>`;
+  }).join('');
+
+  const first = log[0];
+  const last = log[log.length - 1];
+  const change = last.weight - first.weight;
+  document.getElementById('stat-start').textContent = first.weight;
+  document.getElementById('stat-current').textContent = last.weight;
+  document.getElementById('stat-change').textContent = (change > 0 ? '+' : '') + change.toFixed(1);
+  document.getElementById('stat-change').style.color = change <= 0 ? 'var(--accent2)' : 'var(--danger)';
+}
+
+// ===== FAQ =====
+function toggleFaq(btn) {
+  const answer = btn.nextElementSibling;
+  const isOpen = answer.classList.contains('show');
+  document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('show'));
+  document.querySelectorAll('.faq-q').forEach(q => q.classList.remove('open'));
+  if (!isOpen) { answer.classList.add('show'); btn.classList.add('open'); }
+}
+
+// Init
+renderLog();
+</script>
+
+</body>
+</html>
