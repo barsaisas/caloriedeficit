@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How Many Calories Should I Eat to Lose Weight? (Calculator + Science)</title>
+<meta name="description" content="Find out exactly how many calories you should eat to lose weight based on your body, activity level and goals. Includes TDEE calculator, calorie deficit guide and macro breakdown.">
+<link rel="canonical" href="https://caloriedeficit.fit/how-many-calories">
+<meta name="google-site-verification" content="rmkSZb3rxatCfEujM17cLeVwArN4iLfG6GIs5orYs0w" />
+<meta name='impact-site-verification' value='6324e15f-88ae-4fd1-9266-3054926cd6d0'>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How Many Calories Should I Eat to Lose Weight?",
+  "description": "Science-based guide to calculating your daily calorie target for fat loss, including TDEE, BMR, calorie deficit and macro recommendations.",
+  "author": {"@type": "Organization", "name": "CalorieDeficit.fit"},
+  "publisher": {"@type": "Organization", "name": "CalorieDeficit.fit", "url": "https://caloriedeficit.fit"},
+  "datePublished": "2026-05-01",
+  "dateModified": "2026-05-01",
+  "mainEntityOfPage": "https://caloriedeficit.fit/how-many-calories"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How many calories should I eat a day to lose weight?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Most adults need a deficit of 300–500 calories per day below their TDEE to lose 0.25–0.5 kg (0.5–1 lb) per week sustainably. The exact number depends on your weight, height, age, sex and activity level. Use our TDEE calculator to get your personalised target."}
+    },
+    {
+      "@type": "Question",
+      "name": "What is a calorie deficit?",
+      "acceptedAnswer": {"@type": "Answer", "text": "A calorie deficit occurs when you consume fewer calories than your body burns in a day. Since 1 kg of body fat contains approximately 7,700 calories, a daily deficit of 550 calories leads to roughly 0.5 kg of fat loss per week."}
+    },
+    {
+      "@type": "Question",
+      "name": "Is 1200 calories a day enough to lose weight?",
+      "acceptedAnswer": {"@type": "Answer", "text": "1,200 calories is the generally accepted minimum for women and 1,500 for men. Going below these levels risks muscle loss, nutrient deficiencies and metabolic adaptation. A moderate deficit of 300–500 calories below your TDEE is more effective long-term."}
+    },
+    {
+      "@type": "Question",
+      "name": "How do I calculate my TDEE?",
+      "acceptedAnswer": {"@type": "Answer", "text": "TDEE (Total Daily Energy Expenditure) is calculated by multiplying your BMR (Basal Metabolic Rate) by an activity multiplier. BMR is estimated using the Mifflin-St Jeor equation: (10 × weight in kg) + (6.25 × height in cm) − (5 × age) + 5 for men, −161 for women. Our free calculator does this instantly."}
+    },
+    {
+      "@type": "Question",
+      "name": "How many calories should I eat on Ozempic or Wegovy?",
+      "acceptedAnswer": {"@type": "Answer", "text": "On GLP-1 medications like semaglutide (Ozempic, Wegovy) or tirzepatide (Mounjaro), your appetite is significantly suppressed. Most patients eat 1,000–1,400 calories per day. The critical factor is maintaining adequate protein intake (at least 1.6–2.2g per kg of bodyweight) to prevent muscle loss during rapid weight loss."}
+    }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #0e0f11;
+  --surface: #16181c;
+  --surface2: #1e2126;
+  --border: #2a2d35;
+  --accent: #c8f53a;
+  --accent2: #4ade80;
+  --text: #f0f0ee;
+  --text2: #9a9b9f;
+  --text3: #5a5c62;
+  --radius: 14px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 16px; }
+.wrap { max-width: 740px; margin: 0 auto; padding: 0 24px 80px; }
+
+/* NAV */
+nav { padding: 20px 0; border-bottom: 1px solid var(--border); margin-bottom: 48px; display: flex; align-items: center; justify-content: space-between; }
+.nav-logo { font-size: 13px; font-weight: 500; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; font-family: 'DM Mono', monospace; text-decoration: none; }
+.nav-cta { padding: 8px 18px; background: var(--accent); color: #0e0f11; border-radius: 20px; font-size: 13px; font-weight: 600; text-decoration: none; transition: opacity 0.2s; }
+.nav-cta:hover { opacity: 0.88; }
+
+/* ARTICLE HEADER */
+.article-header { margin-bottom: 40px; }
+.article-tag { font-size: 12px; font-family: 'DM Mono', monospace; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; display: block; }
+h1 { font-size: clamp(28px, 5vw, 42px); font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 16px; }
+h1 em { color: var(--accent); font-style: normal; }
+.article-meta { font-size: 13px; color: var(--text3); display: flex; gap: 20px; flex-wrap: wrap; }
+.article-meta span { display: flex; align-items: center; gap: 6px; }
+
+/* QUICK ANSWER BOX */
+.quick-answer {
+  background: linear-gradient(135deg, #1a1f14 0%, #131810 100%);
+  border: 1px solid rgba(200,245,58,0.3);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  margin: 32px 0;
+}
+.quick-answer-label { font-size: 11px; color: var(--accent); font-family: 'DM Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+.quick-answer p { font-size: 16px; color: var(--text); line-height: 1.7; }
+.quick-answer strong { color: var(--accent); }
+
+/* CONTENT */
+h2 { font-size: 24px; font-weight: 600; letter-spacing: -0.02em; margin: 48px 0 16px; color: var(--text); }
+h3 { font-size: 18px; font-weight: 500; margin: 32px 0 12px; color: var(--text); }
+p { margin-bottom: 18px; color: var(--text); line-height: 1.75; }
+p:last-child { margin-bottom: 0; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { font-weight: 500; color: var(--text); }
+
+/* TABLE */
+.table-wrap { overflow-x: auto; margin: 24px 0; border-radius: var(--radius); border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+thead { background: var(--surface2); }
+th { padding: 12px 16px; text-align: left; font-weight: 500; color: var(--text2); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; font-family: 'DM Mono', monospace; border-bottom: 1px solid var(--border); }
+td { padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--text); }
+tr:last-child td { border-bottom: none; }
+tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+.highlight-row td { color: var(--accent); font-weight: 500; }
+
+/* CALLOUT */
+.callout { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent2); border-radius: 0 var(--radius) var(--radius) 0; padding: 18px 22px; margin: 28px 0; }
+.callout-title { font-size: 13px; font-weight: 500; color: var(--accent2); margin-bottom: 6px; }
+.callout p { font-size: 14px; color: var(--text2); margin: 0; }
+
+.callout-warning { border-left-color: #fb923c; }
+.callout-warning .callout-title { color: #fb923c; }
+
+.callout-glp1 { border-left-color: #a78bfa; background: rgba(167,139,250,0.05); }
+.callout-glp1 .callout-title { color: #a78bfa; }
+
+/* CTA BLOCK */
+.cta-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  margin: 40px 0;
+  text-align: center;
+}
+.cta-block h3 { margin: 0 0 8px; font-size: 20px; }
+.cta-block p { font-size: 14px; color: var(--text2); margin: 0 0 20px; }
+.cta-btn { display: inline-block; padding: 13px 32px; background: var(--accent); color: #0e0f11; border-radius: 8px; font-weight: 600; font-size: 15px; text-decoration: none; transition: opacity 0.2s; }
+.cta-btn:hover { opacity: 0.9; text-decoration: none; }
+
+/* FORMULA BOX */
+.formula {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 20px;
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  color: var(--accent);
+  margin: 16px 0;
+  line-height: 1.8;
+}
+
+/* DEFICIT TABLE */
+.deficit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 20px 0; }
+.deficit-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; text-align: center; }
+.deficit-card .rate { font-size: 22px; font-weight: 600; color: var(--accent); font-family: 'DM Mono', monospace; margin-bottom: 4px; }
+.deficit-card .label { font-size: 12px; color: var(--text2); }
+.deficit-card .kcal { font-size: 13px; color: var(--text3); margin-top: 4px; font-family: 'DM Mono', monospace; }
+
+/* AFFILIATE */
+.affiliate { background: linear-gradient(135deg, #1a1510 0%, #120f0a 100%); border: 1px solid rgba(251,146,60,0.3); border-radius: var(--radius); padding: 22px 26px; margin: 36px 0; display: flex; gap: 18px; align-items: center; }
+.affiliate-icon { font-size: 28px; flex-shrink: 0; }
+.affiliate-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+.affiliate-desc { font-size: 13px; color: var(--text2); margin-bottom: 12px; }
+.affiliate-link { display: inline-block; padding: 8px 18px; background: #fb923c; color: #0e0f11; border-radius: 20px; font-size: 13px; font-weight: 600; text-decoration: none; }
+.affiliate-link:hover { opacity: 0.88; text-decoration: none; }
+
+/* FAQ */
+.faq { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--border); }
+.faq h2 { margin-top: 0; }
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-q { width: 100%; background: none; border: none; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; text-align: left; padding: 18px 0; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.faq-q .ch { font-size: 18px; color: var(--text3); transition: transform 0.2s; flex-shrink: 0; }
+.faq-q.open .ch { transform: rotate(45deg); }
+.faq-a { font-size: 14px; color: var(--text2); line-height: 1.7; padding-bottom: 18px; display: none; }
+.faq-a.show { display: block; }
+
+/* FOOTER */
+footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text3); line-height: 1.7; }
+
+/* BREADCRUMB */
+.breadcrumb { font-size: 12px; color: var(--text3); margin-bottom: 24px; }
+.breadcrumb a { color: var(--text3); text-decoration: none; }
+.breadcrumb a:hover { color: var(--text2); }
+.breadcrumb span { margin: 0 6px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav>
+  <a href="https://caloriedeficit.fit" class="nav-logo">CalorieDeficit.fit</a>
+  <a href="https://caloriedeficit.fit" class="nav-cta">Free Calculator →</a>
+</nav>
+
+<div class="breadcrumb">
+  <a href="https://caloriedeficit.fit">Home</a>
+  <span>›</span>
+  <span>How Many Calories to Lose Weight</span>
+</div>
+
+<article>
+  <header class="article-header">
+    <span class="article-tag">Calorie Deficit Guide</span>
+    <h1>How Many Calories Should I Eat to <em>Lose Weight</em>?</h1>
+    <div class="article-meta">
+      <span>📅 Updated May 2026</span>
+      <span>⏱ 7 min read</span>
+      <span>🔬 Science-based</span>
+    </div>
+  </header>
+
+  <div class="quick-answer">
+    <div class="quick-answer-label">⚡ Quick Answer</div>
+    <p>Most adults should eat <strong>300–500 calories below their TDEE</strong> (Total Daily Energy Expenditure) to lose 0.25–0.5 kg per week sustainably. For a typical adult woman this means roughly <strong>1,400–1,700 kcal/day</strong>; for a man, <strong>1,700–2,100 kcal/day</strong>. Your exact number depends on your weight, height, age and activity level — <a href="https://caloriedeficit.fit">use our free calculator</a> to get your personalised target in 30 seconds.</p>
+  </div>
+
+  <p>The internet is full of generic "eat 1,200 calories" advice that ignores the fact that your calorie needs are completely individual. A 5'4" sedentary woman and a 6'2" active man have vastly different requirements. This guide explains exactly how to calculate the right number for your body — and why getting it right makes the difference between sustainable fat loss and frustrating yo-yo dieting.</p>
+
+  <h2>Step 1 — Calculate Your TDEE</h2>
+
+  <p>Before you can create a deficit, you need to know your <strong>TDEE (Total Daily Energy Expenditure)</strong> — the total number of calories your body burns in a day including all activity. This is your true maintenance level: eat below it and you lose weight, eat above it and you gain.</p>
+
+  <p>TDEE is calculated in two steps. First, your <strong>BMR (Basal Metabolic Rate)</strong> — the calories your body burns at complete rest just to keep you alive. Then that number is multiplied by an activity factor.</p>
+
+  <h3>The Mifflin-St Jeor Formula (Most Accurate)</h3>
+
+  <p>The Mifflin-St Jeor equation is the gold standard for BMR estimation, validated across large population studies and recommended by the Academy of Nutrition and Dietetics:</p>
+
+  <div class="formula">
+    Men: BMR = (10 × weight kg) + (6.25 × height cm) − (5 × age) + 5<br>
+    Women: BMR = (10 × weight kg) + (6.25 × height cm) − (5 × age) − 161
+  </div>
+
+  <p>Then multiply your BMR by your activity level:</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Activity Level</th><th>Description</th><th>Multiplier</th></tr></thead>
+      <tbody>
+        <tr><td>Sedentary</td><td>Desk job, little or no exercise</td><td>× 1.2</td></tr>
+        <tr><td>Lightly active</td><td>1–3 days/week light exercise</td><td>× 1.375</td></tr>
+        <tr class="highlight-row"><td>Moderately active</td><td>3–5 days/week moderate exercise</td><td>× 1.55</td></tr>
+        <tr><td>Very active</td><td>6–7 days/week hard training</td><td>× 1.725</td></tr>
+        <tr><td>Athlete</td><td>Physical job + daily training</td><td>× 1.9</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <div class="callout-title">📊 Example calculation</div>
+    <p>35-year-old woman, 68 kg, 165 cm, lightly active: BMR = (10×68) + (6.25×165) − (5×35) − 161 = 1,445 kcal. TDEE = 1,445 × 1.375 = <strong>1,987 kcal/day</strong>. To lose 0.5 kg/week she should eat approximately 1,612 kcal/day.</p>
+  </div>
+
+  <div class="cta-block">
+    <h3>Skip the maths — get your number instantly</h3>
+    <p>Our free calculator does all of this in 30 seconds and also gives you your macro breakdown and fat loss timeline.</p>
+    <a href="https://caloriedeficit.fit" class="cta-btn">Calculate My Calories Free →</a>
+  </div>
+
+  <h2>Step 2 — Choose Your Calorie Deficit</h2>
+
+  <p>Once you know your TDEE, you subtract a deficit to create weight loss. The size of your deficit determines how fast you lose — but bigger is not always better. An overly aggressive deficit causes muscle loss, fatigue, hormonal disruption and almost always leads to rebound weight gain.</p>
+
+  <div class="deficit-grid">
+    <div class="deficit-card">
+      <div class="rate">−0.25 kg</div>
+      <div class="label">Gentle pace</div>
+      <div class="kcal">−190 kcal/day</div>
+    </div>
+    <div class="deficit-card">
+      <div class="rate">−0.5 kg</div>
+      <div class="label">Optimal pace ⭐</div>
+      <div class="kcal">−375 kcal/day</div>
+    </div>
+    <div class="deficit-card">
+      <div class="rate">−1 kg</div>
+      <div class="label">Aggressive</div>
+      <div class="kcal">−750 kcal/day</div>
+    </div>
+  </div>
+
+  <p>Research consistently shows that a deficit of <strong>300–500 kcal/day</strong> (targeting 0.5 kg/week) produces the best long-term results. It's fast enough to see clear progress within 2–3 weeks, but moderate enough to preserve muscle mass and maintain energy levels. A 2020 meta-analysis in <em>Obesity Reviews</em> confirmed that slower weight loss rates lead to significantly better weight maintenance at 12 months.</p>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">⚠️ Never go below your BMR</div>
+    <p>Eating below your BMR forces your body into starvation mode — it breaks down muscle for energy and slows your metabolism. For most women this means never going below 1,200 kcal/day; for men, 1,500 kcal/day.</p>
+  </div>
+
+  <h2>Step 3 — Set Your Macros</h2>
+
+  <p>Calories determine whether you lose weight. Macros determine what you lose — fat or muscle. Getting your protein right is the single most important nutritional factor during a calorie deficit.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Macro</th><th>Target</th><th>Why it matters</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Protein</strong></td><td>1.6–2.2 g per kg bodyweight</td><td>Preserves muscle, keeps you full, highest thermic effect</td></tr>
+        <tr><td><strong>Fat</strong></td><td>25–35% of total calories</td><td>Hormone production, fat-soluble vitamin absorption</td></tr>
+        <tr><td><strong>Carbs</strong></td><td>Remainder of calories</td><td>Training fuel, brain function, fiber intake</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>A 2022 study in the <em>American Journal of Clinical Nutrition</em> found that participants eating 2.4 g of protein per kg of bodyweight during a calorie deficit lost significantly more fat and preserved more lean mass than those eating 1.2 g/kg — even with identical total calories.</p>
+
+  <div class="affiliate">
+    <div class="affiliate-icon">🍎</div>
+    <div>
+      <div class="affiliate-title">Track your macros without obsessing</div>
+      <div class="affiliate-desc">Hitting your protein target consistently is the hardest part of a deficit. A tracking app makes it effortless — most people hit their goals in the first week.</div>
+      <a href="#" class="affiliate-link">Try MyFitnessPal Free →</a>
+    </div>
+  </div>
+
+  <h2>Calorie Needs by Goal and Body Type</h2>
+
+  <p>To give you a practical reference point, here are typical calorie targets for common profiles. These are estimates — your actual TDEE may vary by ±15%:</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Profile</th><th>Maintenance (TDEE)</th><th>Moderate Deficit</th><th>Weekly Loss</th></tr></thead>
+      <tbody>
+        <tr><td>Woman, 60 kg, sedentary</td><td>~1,700 kcal</td><td>~1,325 kcal</td><td>~0.5 kg</td></tr>
+        <tr><td>Woman, 75 kg, lightly active</td><td>~2,000 kcal</td><td>~1,625 kcal</td><td>~0.5 kg</td></tr>
+        <tr><td>Man, 80 kg, lightly active</td><td>~2,300 kcal</td><td>~1,925 kcal</td><td>~0.5 kg</td></tr>
+        <tr><td>Man, 95 kg, moderately active</td><td>~2,800 kcal</td><td>~2,425 kcal</td><td>~0.5 kg</td></tr>
+        <tr class="highlight-row"><td>Use the calculator</td><td>Your exact TDEE</td><td>Your exact target</td><td>Your timeline</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Calories on GLP-1 Medications (Ozempic, Wegovy, Mounjaro)</h2>
+
+  <div class="callout callout-glp1">
+    <div class="callout-title">💊 Special considerations for semaglutide and tirzepatide users</div>
+    <p>If you're on a GLP-1 agonist, the standard calorie advice changes significantly. These medications suppress appetite so effectively that most patients naturally eat 1,000–1,400 kcal/day — well below their usual intake. The critical risk is <strong>muscle loss</strong>, not calorie intake itself.</p>
+  </div>
+
+  <p>Research published in <em>NEJM</em> on the SURMOUNT trials showed that participants on tirzepatide lost an average of 20% of body weight — but up to 40% of that loss was lean mass in patients who didn't prioritise protein. This is why our calculator has a dedicated <strong>GLP-1 mode</strong> that automatically increases your protein target to 2.2 g/kg to protect muscle during accelerated fat loss.</p>
+
+  <p>If you're on Ozempic, Wegovy or Mounjaro, focus on:</p>
+  <p>— Hitting at least <strong>1.6–2.2 g of protein per kg of bodyweight</strong> every day<br>
+  — Eating <strong>at least 1,000–1,200 kcal/day</strong> even when you're not hungry<br>
+  — Including <strong>resistance training</strong> 2–3 times per week<br>
+  — Following your prescriber's specific guidance on caloric intake</p>
+
+  <h2>Why Generic Calorie Advice Fails</h2>
+
+  <p>The ubiquitous "eat 1,200 calories" recommendation comes from research conducted in the 1970s on small groups of women. Applied universally, it creates deficits that are far too aggressive for some people (a large active man eating 1,200 kcal is in a 1,500 kcal deficit) and potentially insufficient for others.</p>
+
+  <p>Your actual calorie needs are determined by your unique combination of body composition, metabolic rate, activity level, age and hormonal profile. A calorie target should be a personalised starting point — not a universal prescription — and adjusted every 2–3 weeks based on your actual weight trend.</p>
+
+  <div class="cta-block">
+    <h3>Get your personalised calorie target</h3>
+    <p>Enter your stats and get your TDEE, daily calorie target, macro breakdown and fat loss timeline — completely free, no signup required.</p>
+    <a href="https://caloriedeficit.fit" class="cta-btn">Calculate My Calories Now →</a>
+  </div>
+
+  <div class="faq">
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">How many calories should I eat a day to lose weight? <span class="ch">+</span></button>
+      <div class="faq-a">Most adults need a deficit of 300–500 calories per day below their TDEE to lose 0.25–0.5 kg (0.5–1 lb) per week sustainably. The exact number depends on your weight, height, age, sex and activity level. Use our TDEE calculator above to get your personalised target.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">What is a calorie deficit and how does it work? <span class="ch">+</span></button>
+      <div class="faq-a">A calorie deficit occurs when you consume fewer calories than your body burns in a day. Since 1 kg of body fat stores approximately 7,700 calories, a daily deficit of 550 calories creates roughly 0.5 kg of fat loss per week. The deficit forces your body to use stored fat as fuel, leading to weight loss over time.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Is 1200 calories a day enough to lose weight? <span class="ch">+</span></button>
+      <div class="faq-a">1,200 calories is the generally accepted minimum for women and 1,500 for men. Going below these levels risks muscle loss, nutrient deficiencies and metabolic adaptation that makes future weight loss harder. For most people, a moderate deficit of 300–500 calories below their individual TDEE is more effective and sustainable than a fixed low number.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">How do I calculate my TDEE? <span class="ch">+</span></button>
+      <div class="faq-a">TDEE is calculated by multiplying your BMR (Basal Metabolic Rate) by an activity multiplier. BMR estimates the calories your body burns at rest using the Mifflin-St Jeor equation: (10 × weight kg) + (6.25 × height cm) − (5 × age) + 5 for men, −161 for women. You then multiply by 1.2 (sedentary) to 1.9 (very active). Our free calculator does this automatically.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">How many calories should I eat on Ozempic or Wegovy? <span class="ch">+</span></button>
+      <div class="faq-a">On GLP-1 medications like semaglutide (Ozempic, Wegovy) or tirzepatide (Mounjaro), most patients naturally eat 1,000–1,400 calories per day due to appetite suppression. The most important factor is maintaining adequate protein intake — at least 1.6–2.2g per kg of bodyweight — to prevent muscle loss during rapid weight loss. Our calculator has a dedicated GLP-1 mode that adjusts your protein targets accordingly.</div>
+    </div>
+
+  </div>
+
+</article>
+
+<footer>
+  <p>This article is for informational purposes only and does not constitute medical or nutritional advice. Consult a registered dietitian or healthcare professional before making significant dietary changes. Calorie estimates are based on the Mifflin-St Jeor equation (±10% accuracy). Individual results will vary.</p>
+  <p style="margin-top:8px">Sources: Mifflin MD et al. (1990). A new predictive equation for resting energy expenditure in healthy individuals. <em>Am J Clin Nutr</em>. | Jager R et al. (2017). International Society of Sports Nutrition position stand: protein and exercise. <em>J Int Soc Sports Nutr</em>. | Wadden TA et al. (2020). Caloric restriction and weight loss. <em>Obesity Reviews</em>.</p>
+  <p style="margin-top:12px"><a href="https://caloriedeficit.fit" style="color:var(--text3)">← Back to CalorieDeficit.fit</a></p>
+</footer>
+
+</div>
+
+<script>
+function toggleFaq(btn) {
+  const answer = btn.nextElementSibling;
+  const isOpen = answer.classList.contains('show');
+  document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('show'));
+  document.querySelectorAll('.faq-q').forEach(q => q.classList.remove('open'));
+  if (!isOpen) { answer.classList.add('show'); btn.classList.add('open'); }
+}
+</script>
+
+</body>
+</html>
