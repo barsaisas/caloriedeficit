@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What is TDEE? How to Calculate Your Total Daily Energy Expenditure</title>
+<meta name="description" content="TDEE (Total Daily Energy Expenditure) is the key number for weight loss or muscle gain. Learn what it is, how to calculate it accurately, and how to use it to reach your goals.">
+<link rel="canonical" href="https://caloriedeficit.fit/what-is-tdee">
+<meta name="google-site-verification" content="rmkSZb3rxatCfEujM17cLeVwArN4iLfG6GIs5orYs0w" />
+<meta name="google-site-verification" content="xFVl9OvAc0RQLTXtxwpm8-ASkRu2u3GzA9BkVY-dg8Y" />
+<meta name='impact-site-verification' value='6324e15f-88ae-4fd1-9266-3054926cd6d0'>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "What is TDEE? How to Calculate Your Total Daily Energy Expenditure",
+  "description": "Complete guide to TDEE — what it is, how to calculate it using the Mifflin-St Jeor equation, and how to use it for fat loss or muscle gain.",
+  "author": {"@type": "Organization", "name": "CalorieDeficit.fit"},
+  "publisher": {"@type": "Organization", "name": "CalorieDeficit.fit", "url": "https://caloriedeficit.fit"},
+  "datePublished": "2026-05-01",
+  "dateModified": "2026-05-01",
+  "mainEntityOfPage": "https://caloriedeficit.fit/what-is-tdee"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is TDEE?",
+      "acceptedAnswer": {"@type": "Answer", "text": "TDEE stands for Total Daily Energy Expenditure — the total number of calories your body burns in a day, including your basal metabolic rate plus all physical activity. It is your true maintenance calorie level: eat below it to lose weight, above it to gain."}
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between BMR and TDEE?",
+      "acceptedAnswer": {"@type": "Answer", "text": "BMR (Basal Metabolic Rate) is the calories your body burns at complete rest — just to keep your heart beating, lungs breathing and organs functioning. TDEE includes your BMR plus all energy burned through movement, exercise and digestion. TDEE is always higher than BMR."}
+    },
+    {
+      "@type": "Question",
+      "name": "How accurate is TDEE calculation?",
+      "acceptedAnswer": {"@type": "Answer", "text": "The Mifflin-St Jeor formula estimates TDEE with approximately ±10% accuracy for most people. The biggest source of error is the activity multiplier — most people underestimate their sedentary time and overestimate their activity level. Use calculated TDEE as a starting point and adjust after 2–3 weeks based on actual weight changes."}
+    },
+    {
+      "@type": "Question",
+      "name": "Does TDEE change over time?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Yes. As you lose weight your TDEE decreases because there is less body mass to maintain. This is why weight loss plateaus occur — your calorie deficit shrinks as you get lighter. Recalculate your TDEE every 4–6 weeks or every 3–5 kg of weight lost to keep your deficit accurate."}
+    },
+    {
+      "@type": "Question",
+      "name": "Should I eat my TDEE to maintain weight?",
+      "acceptedAnswer": {"@type": "Answer", "text": "Yes — eating at your TDEE means consuming exactly what you burn, resulting in weight maintenance over time. In practice, aim within ±100 calories of your TDEE. Minor day-to-day variation is normal and doesn't affect long-term weight."}
+    }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #0e0f11;
+  --surface: #16181c;
+  --surface2: #1e2126;
+  --border: #2a2d35;
+  --accent: #c8f53a;
+  --accent2: #4ade80;
+  --accent3: #fb923c;
+  --text: #f0f0ee;
+  --text2: #9a9b9f;
+  --text3: #5a5c62;
+  --radius: 14px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.75; font-size: 16px; }
+.wrap { max-width: 740px; margin: 0 auto; padding: 0 24px 80px; }
+
+nav { padding: 20px 0; border-bottom: 1px solid var(--border); margin-bottom: 48px; display: flex; align-items: center; justify-content: space-between; }
+.nav-logo { font-size: 13px; font-weight: 500; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; font-family: 'DM Mono', monospace; text-decoration: none; }
+.nav-cta { padding: 8px 18px; background: var(--accent); color: #0e0f11; border-radius: 20px; font-size: 13px; font-weight: 600; text-decoration: none; transition: opacity 0.2s; }
+.nav-cta:hover { opacity: 0.88; }
+
+.breadcrumb { font-size: 12px; color: var(--text3); margin-bottom: 24px; }
+.breadcrumb a { color: var(--text3); text-decoration: none; }
+.breadcrumb span { margin: 0 6px; }
+
+.article-tag { font-size: 12px; font-family: 'DM Mono', monospace; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; display: block; }
+h1 { font-size: clamp(28px, 5vw, 42px); font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 16px; }
+h1 em { color: var(--accent); font-style: normal; }
+.article-meta { font-size: 13px; color: var(--text3); display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 32px; }
+
+.quick-answer { background: linear-gradient(135deg, #1a1f14 0%, #131810 100%); border: 1px solid rgba(200,245,58,0.3); border-radius: var(--radius); padding: 24px 28px; margin: 0 0 32px; }
+.quick-answer-label { font-size: 11px; color: var(--accent); font-family: 'DM Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+.quick-answer p { font-size: 16px; color: var(--text); line-height: 1.7; }
+.quick-answer strong { color: var(--accent); }
+
+h2 { font-size: 24px; font-weight: 600; letter-spacing: -0.02em; margin: 48px 0 16px; }
+h3 { font-size: 18px; font-weight: 500; margin: 32px 0 12px; }
+p { margin-bottom: 18px; line-height: 1.75; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+strong { font-weight: 500; }
+
+.table-wrap { overflow-x: auto; margin: 24px 0; border-radius: var(--radius); border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+thead { background: var(--surface2); }
+th { padding: 12px 16px; text-align: left; font-weight: 500; color: var(--text2); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; font-family: 'DM Mono', monospace; border-bottom: 1px solid var(--border); }
+td { padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--text); }
+tr:last-child td { border-bottom: none; }
+tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+.hl td { color: var(--accent); font-weight: 500; }
+
+.callout { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--accent2); border-radius: 0 var(--radius) var(--radius) 0; padding: 18px 22px; margin: 28px 0; }
+.callout-title { font-size: 13px; font-weight: 500; color: var(--accent2); margin-bottom: 6px; }
+.callout p { font-size: 14px; color: var(--text2); margin: 0; line-height: 1.6; }
+.callout-warn { border-left-color: var(--accent3); }
+.callout-warn .callout-title { color: var(--accent3); }
+.callout-info { border-left-color: #60a5fa; }
+.callout-info .callout-title { color: #60a5fa; }
+
+.formula { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); margin: 16px 0; line-height: 1.8; }
+
+.component-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 20px 0; }
+.component-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px 16px; }
+.component-icon { font-size: 24px; margin-bottom: 10px; }
+.component-name { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+.component-pct { font-size: 22px; font-weight: 600; color: var(--accent); font-family: 'DM Mono', monospace; margin-bottom: 4px; }
+.component-desc { font-size: 12px; color: var(--text3); line-height: 1.5; }
+
+.cta-block { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; margin: 40px 0; text-align: center; }
+.cta-block h3 { margin: 0 0 8px; font-size: 20px; }
+.cta-block p { font-size: 14px; color: var(--text2); margin: 0 0 20px; }
+.cta-btn { display: inline-block; padding: 13px 32px; background: var(--accent); color: #0e0f11; border-radius: 8px; font-weight: 600; font-size: 15px; text-decoration: none; }
+.cta-btn:hover { opacity: 0.9; text-decoration: none; }
+
+.step-list { counter-reset: steps; list-style: none; margin: 20px 0; }
+.step-list li { counter-increment: steps; display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
+.step-list li:last-child { border-bottom: none; }
+.step-num { width: 28px; height: 28px; border-radius: 50%; background: rgba(200,245,58,0.12); border: 1px solid rgba(200,245,58,0.3); color: var(--accent); font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'DM Mono', monospace; }
+.step-content { flex: 1; }
+.step-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+.step-desc { font-size: 13px; color: var(--text2); line-height: 1.6; margin: 0; }
+
+.affiliate { background: linear-gradient(135deg, #1a1510 0%, #120f0a 100%); border: 1px solid rgba(251,146,60,0.3); border-radius: var(--radius); padding: 22px 26px; margin: 36px 0; display: flex; gap: 18px; align-items: center; }
+.affiliate-icon { font-size: 28px; flex-shrink: 0; }
+.affiliate-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+.affiliate-desc { font-size: 13px; color: var(--text2); margin-bottom: 12px; }
+.affiliate-link { display: inline-block; padding: 8px 18px; background: var(--accent3); color: #0e0f11; border-radius: 20px; font-size: 13px; font-weight: 600; text-decoration: none; }
+.affiliate-link:hover { opacity: 0.88; text-decoration: none; }
+
+.related { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 28px; margin: 40px 0; }
+.related-title { font-size: 12px; font-family: 'DM Mono', monospace; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px; }
+.related-link { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); text-decoration: none; color: var(--text); font-size: 14px; font-weight: 500; transition: color 0.2s; }
+.related-link:last-child { border-bottom: none; }
+.related-link:hover { color: var(--accent); text-decoration: none; }
+.related-link::after { content: '→'; color: var(--text3); margin-left: auto; }
+
+.faq { margin-top: 56px; padding-top: 40px; border-top: 1px solid var(--border); }
+.faq h2 { margin-top: 0; }
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-q { width: 100%; background: none; border: none; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; text-align: left; padding: 18px 0; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.faq-q .ch { font-size: 18px; color: var(--text3); transition: transform 0.2s; flex-shrink: 0; }
+.faq-q.open .ch { transform: rotate(45deg); }
+.faq-a { font-size: 14px; color: var(--text2); line-height: 1.7; padding-bottom: 18px; display: none; }
+.faq-a.show { display: block; }
+
+footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text3); line-height: 1.7; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav>
+  <a href="https://caloriedeficit.fit" class="nav-logo">CalorieDeficit.fit</a>
+  <a href="https://caloriedeficit.fit" class="nav-cta">Free Calculator →</a>
+</nav>
+
+<div class="breadcrumb">
+  <a href="https://caloriedeficit.fit">Home</a>
+  <span>›</span>
+  <span>What is TDEE</span>
+</div>
+
+<article>
+  <span class="article-tag">TDEE Guide</span>
+  <h1>What is <em>TDEE</em>? How to Calculate Your Total Daily Energy Expenditure</h1>
+  <div class="article-meta">
+    <span>📅 May 2026</span>
+    <span>⏱ 6 min read</span>
+    <span>🔬 Science-based</span>
+  </div>
+
+  <div class="quick-answer">
+    <div class="quick-answer-label">⚡ Quick Answer</div>
+    <p><strong>TDEE (Total Daily Energy Expenditure)</strong> is the total number of calories your body burns every day — including at rest and during all activity. It is your personal maintenance calorie level: eat below it to lose fat, above it to build muscle. <a href="https://caloriedeficit.fit">Calculate your TDEE free in 30 seconds →</a></p>
+  </div>
+
+  <p>TDEE is the single most important number in nutrition. Without knowing it, any calorie target you follow — whether from a diet book, an app or a generic online guide — is essentially a guess. Knowing your personal TDEE lets you engineer your body composition with precision rather than hoping for the best.</p>
+
+  <h2>What Makes Up Your TDEE?</h2>
+
+  <p>Your TDEE is not one fixed number — it's the sum of four distinct components, each of which can be influenced by your lifestyle choices:</p>
+
+  <div class="component-grid">
+    <div class="component-card">
+      <div class="component-icon">🫀</div>
+      <div class="component-pct">60–70%</div>
+      <div class="component-name">BMR</div>
+      <div class="component-desc">Calories burned at complete rest. Breathing, heartbeat, organ function, cell repair.</div>
+    </div>
+    <div class="component-card">
+      <div class="component-icon">🏃</div>
+      <div class="component-pct">15–30%</div>
+      <div class="component-name">Exercise Activity</div>
+      <div class="component-desc">Deliberate training — gym, running, cycling, sport.</div>
+    </div>
+    <div class="component-card">
+      <div class="component-icon">🚶</div>
+      <div class="component-pct">10–15%</div>
+      <div class="component-name">NEAT</div>
+      <div class="component-desc">Non-Exercise Activity Thermogenesis — walking, fidgeting, standing, daily movement.</div>
+    </div>
+    <div class="component-card">
+      <div class="component-icon">🍽️</div>
+      <div class="component-pct">8–10%</div>
+      <div class="component-name">TEF</div>
+      <div class="component-desc">Thermic Effect of Food — calories burned digesting and processing food.</div>
+    </div>
+  </div>
+
+  <div class="callout callout-info">
+    <div class="callout-title">💡 The NEAT insight most people miss</div>
+    <p>NEAT (non-exercise movement) varies by up to 2,000 kcal/day between individuals with similar body sizes. This is why two people can eat the same food and have completely different weight outcomes — one fidgets, stands and walks constantly; the other sits still. NEAT is the hidden variable that makes generic calorie advice unreliable.</p>
+  </div>
+
+  <h2>How to Calculate Your TDEE</h2>
+
+  <p>The most accurate method to estimate TDEE without laboratory equipment is the <strong>Mifflin-St Jeor equation</strong>, validated in a landmark 1990 study and consistently outperforming older formulas like Harris-Benedict in head-to-head comparisons.</p>
+
+  <h3>Step 1 — Calculate Your BMR</h3>
+
+  <div class="formula">
+    Men: BMR = (10 × weight kg) + (6.25 × height cm) − (5 × age) + 5<br>
+    Women: BMR = (10 × weight kg) + (6.25 × height cm) − (5 × age) − 161
+  </div>
+
+  <h3>Step 2 — Multiply by Your Activity Factor</h3>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Activity Level</th><th>What it means in practice</th><th>Multiplier</th><th>Example TDEE (75kg woman)</th></tr></thead>
+      <tbody>
+        <tr><td>Sedentary</td><td>Desk job, no exercise, mostly sitting</td><td>× 1.2</td><td>~1,740 kcal</td></tr>
+        <tr><td>Lightly active</td><td>1–3 days/week exercise or active job</td><td>× 1.375</td><td>~1,994 kcal</td></tr>
+        <tr class="hl"><td>Moderately active ⭐</td><td>3–5 days/week moderate training</td><td>× 1.55</td><td>~2,247 kcal</td></tr>
+        <tr><td>Very active</td><td>6–7 days/week hard training</td><td>× 1.725</td><td>~2,501 kcal</td></tr>
+        <tr><td>Athlete</td><td>Physical job + daily intense training</td><td>× 1.9</td><td>~2,755 kcal</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-warn">
+    <div class="callout-title">⚠️ The most common TDEE mistake</div>
+    <p>Most people choose "moderately active" when they should choose "lightly active" or "sedentary". If you exercise 3x/week but sit at a desk for 8+ hours, you are lightly active at best. Overestimating your activity is the number one reason calculated TDEE feels too high and weight loss stalls.</p>
+  </div>
+
+  <div class="cta-block">
+    <h3>Calculate your exact TDEE now</h3>
+    <p>Skip the manual calculation — our free tool computes your TDEE, calorie deficit target, macros and fat loss timeline in 30 seconds.</p>
+    <a href="https://caloriedeficit.fit" class="cta-btn">Calculate My TDEE Free →</a>
+  </div>
+
+  <h2>How to Use Your TDEE to Reach Your Goal</h2>
+
+  <p>Once you know your TDEE, applying it is straightforward. The key principle: <strong>your calorie intake relative to TDEE determines your body composition trajectory</strong>.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Goal</th><th>Calorie Target</th><th>Expected Result</th></tr></thead>
+      <tbody>
+        <tr><td>Fat loss (moderate)</td><td>TDEE − 300 to 500 kcal</td><td>0.25–0.5 kg/week fat loss</td></tr>
+        <tr><td>Fat loss (aggressive)</td><td>TDEE − 500 to 750 kcal</td><td>0.5–1 kg/week (higher muscle loss risk)</td></tr>
+        <tr class="hl"><td>Maintenance</td><td>= TDEE</td><td>Stable weight over time</td></tr>
+        <tr><td>Lean bulk</td><td>TDEE + 150 to 250 kcal</td><td>Slow muscle gain, minimal fat</td></tr>
+        <tr><td>Aggressive bulk</td><td>TDEE + 300 to 500 kcal</td><td>Faster muscle gain, more fat</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Why Your TDEE Changes Over Time</h2>
+
+  <p>TDEE is not a fixed number for life. It changes as your body composition, activity and age change — which is why weight loss inevitably slows down if you never adjust your targets.</p>
+
+  <ul class="step-list">
+    <li>
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <p class="step-title">Weight loss reduces TDEE</p>
+        <p class="step-desc">Less body mass = less energy required to maintain it. Losing 10 kg can reduce TDEE by 150–250 kcal/day, shrinking your deficit without you changing anything.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <p class="step-title">Metabolic adaptation</p>
+        <p class="step-desc">During prolonged calorie restriction, your body reduces NEAT (unconscious movement) and metabolic rate as a survival mechanism. This can reduce TDEE by 10–15% beyond what body weight changes would predict.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <p class="step-title">Muscle gain increases TDEE</p>
+        <p class="step-desc">Muscle tissue is metabolically active — each kg of muscle burns approximately 13 kcal/day at rest. Building muscle through resistance training gradually increases your TDEE over months.</p>
+      </div>
+    </li>
+    <li>
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <p class="step-title">Age reduces TDEE</p>
+        <p class="step-desc">BMR decreases approximately 1–2% per decade after age 30, primarily due to gradual muscle loss. Resistance training is the most effective intervention to slow this decline.</p>
+      </div>
+    </li>
+  </ul>
+
+  <div class="callout">
+    <div class="callout-title">✅ Practical rule</div>
+    <p>Recalculate your TDEE every 4–6 weeks or every 3–5 kg of weight change. This keeps your calorie target accurate as your body adapts.</p>
+  </div>
+
+  <h2>TDEE for Night Shift and Shift Workers</h2>
+
+  <p>If you work rotating shifts — nights, early mornings or irregular hours — standard TDEE calculations become less reliable. Circadian rhythm disruption reduces metabolic rate, impairs insulin sensitivity and alters hunger hormones (ghrelin and leptin), all of which affect how efficiently your body processes calories.</p>
+
+  <p>Research published in the <em>Journal of Clinical Endocrinology & Metabolism</em> found that simulated night shift workers burned approximately 12–16% fewer calories during sleep compared to day workers with identical activity levels. As a practical adjustment, shift workers should consider using the activity multiplier one level below their actual activity — for example, choosing "lightly active" instead of "moderately active" — and tracking actual weight trend to validate.</p>
+
+  <affiliate>
+  </affiliate>
+
+  <div class="affiliate">
+    <div class="affiliate-icon">📊</div>
+    <div>
+      <div class="affiliate-title">Track your TDEE in action</div>
+      <div class="affiliate-desc">The best way to validate your calculated TDEE is to track food intake for 2 weeks and observe your weight trend. A calorie tracking app makes this effortless.</div>
+      <a href="#" class="affiliate-link">Try MyFitnessPal Free →</a>
+    </div>
+  </div>
+
+  <div class="related">
+    <div class="related-title">Related guides</div>
+    <a href="https://caloriedeficit.fit/how-many-calories" class="related-link">How many calories should I eat to lose weight?</a>
+    <a href="https://caloriedeficit.fit" class="related-link">Free TDEE & Calorie Deficit Calculator</a>
+  </div>
+
+  <div class="faq">
+    <h2>Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">What is TDEE in simple terms? <span class="ch">+</span></button>
+      <div class="faq-a">TDEE is the total number of calories your body burns every day — at rest plus all physical activity. Think of it as your body's daily energy budget. Eat below it and you lose weight; eat above it and you gain. It's the foundation of all nutrition planning.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">What is the difference between BMR and TDEE? <span class="ch">+</span></button>
+      <div class="faq-a">BMR (Basal Metabolic Rate) is the calories your body burns at complete rest — just to keep your heart beating and organs functioning. TDEE includes your BMR plus all energy burned through movement, exercise and digestion. TDEE is always higher than BMR — typically 20–90% higher depending on your activity level.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">How accurate is TDEE calculation? <span class="ch">+</span></button>
+      <div class="faq-a">The Mifflin-St Jeor formula estimates TDEE with approximately ±10% accuracy for most people. The biggest source of error is choosing the wrong activity multiplier — most people overestimate their activity level. Use the calculated number as a starting point and adjust after 2–3 weeks based on actual weight changes.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Does TDEE change as I lose weight? <span class="ch">+</span></button>
+      <div class="faq-a">Yes — as you lose weight your TDEE decreases because there is less body mass to maintain. This is why weight loss plateaus happen: your calorie deficit shrinks as you get lighter. Recalculate your TDEE every 4–6 weeks or every 3–5 kg of weight lost to keep your deficit accurate.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Should I eat my TDEE on rest days? <span class="ch">+</span></button>
+      <div class="faq-a">You can use the same TDEE every day (which averages out over the week) or cycle calories — eating more on training days and less on rest days. Both approaches work equally well for fat loss. The simpler approach (same target daily) tends to lead to better long-term adherence for most people.</div>
+    </div>
+
+  </div>
+
+</article>
+
+<footer>
+  <p>This article is for informational purposes only and does not constitute medical or nutritional advice. Consult a registered dietitian or healthcare professional before making significant dietary changes.</p>
+  <p style="margin-top:8px">Sources: Mifflin MD et al. (1990). A new predictive equation for resting energy expenditure. <em>Am J Clin Nutr</em>. | Levine JA (2004). Nonexercise activity thermogenesis. <em>Science</em>. | Heilbronn LK et al. (2006). Metabolic adaptation to caloric restriction. <em>Obesity Reviews</em>.</p>
+  <p style="margin-top:12px"><a href="https://caloriedeficit.fit" style="color:var(--text3)">← Back to CalorieDeficit.fit</a></p>
+</footer>
+
+</div>
+
+<script>
+function toggleFaq(btn) {
+  const answer = btn.nextElementSibling;
+  const isOpen = answer.classList.contains('show');
+  document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('show'));
+  document.querySelectorAll('.faq-q').forEach(q => q.classList.remove('open'));
+  if (!isOpen) { answer.classList.add('show'); btn.classList.add('open'); }
+}
+</script>
+
+</body>
+</html>
